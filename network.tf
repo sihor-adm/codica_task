@@ -97,3 +97,8 @@ resource "aws_nat_gateway" "public2-nat-gw" {
 
   depends_on = [aws_internet_gateway.main-igw]
 }
+
+resource "aws_db_subnet_group" "rds_sub_group" {
+  name        = "rds-subnet-group"
+  subnet_ids  = [aws_subnet.private1.id, aws_subnet.private2.id]
+}

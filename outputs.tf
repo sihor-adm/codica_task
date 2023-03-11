@@ -3,22 +3,22 @@ output "VPC_ip_range" {
   description = "IP range of VPC"
 }
 
-output "Pvivate1_subnet_ip" {
+output "SUB_private1_subnet_ip" {
   value = aws_subnet.public1.cidr_block
 
 }
 
-output "Pvivate2_subnet_ip" {
+output "SUB_private2_subnet_ip" {
   value = aws_subnet.public2.cidr_block
 
 }
 
-output "Public1_subnet_ip_range" {
+output "SUB_public1_subnet_ip_range" {
   value = aws_subnet.private1.cidr_block
 
 }
 
-output "Public2_subnet_ip_range" {
+output "SUB_public2_subnet_ip_range" {
   value = aws_subnet.private2.cidr_block
 
 }
@@ -62,4 +62,32 @@ output "NAT_public1_private_ip" {
 
 output "NAT_public2_private_ip" {
   value = aws_nat_gateway.public2-nat-gw.private_ip
+}
+
+output "INSTANCE_key_name" {
+  value = aws_instance.webserver.key_name
+}
+
+output "INSTANCE_private_ip" {
+  value = aws_instance.webserver.private_ip
+}
+
+output "INSTANCE_public_ip" {
+  value = aws_instance.webserver.public_ip
+}
+
+output "RDS_db_name" {
+  value = aws_db_instance.wp_db.db_name
+}
+
+output "RDS_engine" {
+  value = aws_db_instance.wp_db.engine
+}
+
+output "RDS_engine_version" {
+  value = aws_db_instance.wp_db.engine_version
+}
+
+output "RDS_instance_class" {
+  value = aws_db_instance.wp_db.instance_class
 }
