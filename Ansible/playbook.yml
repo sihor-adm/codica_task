@@ -1,0 +1,61 @@
+---
+- name: Install Docker and Docker Compose
+  hosts: all
+  become: true
+  vars:
+    docker_compose_version: "1.29.2"
+  tasks:
+    - name: Install dependencies
+      package:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - apt-transport-https
+        - ca-certificates
+        - curl
+        - gnupg2
+        - software-properties-common
+        - yum-utils
+        - device-mapper-persistent-data
+        - lvm2
+
+    - name: Add Docker GPG key
+      apt_key:
+        url: https://download.docker.com/linux/debian/gpg
+        state: present
+      when: ansible_distribution == "Debian"
+
+    - name: Add Docker YUM repository
+      yum_repository:
+        name: docker-ce-stable
+        description: Docker CE Stable - $basearch
+        baseurl: https://download.docker.com/linux/centos/7/$basearch/stable
+        gpgcheck: 1
+        gpgkey: https://download.docker.com/linux/centos/gpg
+        enabled: 1
+      when: ansible_distribution == "CentOS"
+
+    - name: Install Docker
+      package:
+        name: docker-ce
+        state: present
+
+    - name: Add user to Docker group
+      user:
+        name: "{{ ansible_user }}"
+        groups: docker
+        append: yes
+
+    - name: Install Docker Compose
+      get_url:
+        url: "https://github.com/docker/compose/releases/download/{{ docker_compose_version }}/docker-compose-{{ 'Linux-x86_64' if ansible_architecture == 'x86_64' else 'Linux-aarch64' }}"
+        dest: /usr/local/bin/docker-compose
+        mode: "u+x,g+x"
+      register: download_result
+      until: download_result is succeeded
+      retries: 3
+
+    - name: Verify Docker Compose installation
+      shell: "docker-compose --version"
+      changed_when: false
+      failed_when: false
