@@ -77,8 +77,8 @@ resource "aws_eip" "eip2" {
 }
 
 resource "aws_nat_gateway" "public1-nat-gw" {
-  allocation_id     = aws_eip.eip1.id
-  subnet_id         = aws_subnet.public1.id
+  allocation_id = aws_eip.eip1.id
+  subnet_id     = aws_subnet.public1.id
 
   tags = {
     Name = "Public1 gw NAT"
@@ -88,8 +88,8 @@ resource "aws_nat_gateway" "public1-nat-gw" {
 }
 
 resource "aws_nat_gateway" "public2-nat-gw" {
-  allocation_id     = aws_eip.eip2.id
-  subnet_id         = aws_subnet.public2.id
+  allocation_id = aws_eip.eip2.id
+  subnet_id     = aws_subnet.public2.id
 
   tags = {
     Name = "Public2 gw NAT"
@@ -98,7 +98,7 @@ resource "aws_nat_gateway" "public2-nat-gw" {
   depends_on = [aws_internet_gateway.main-igw]
 }
 
-# resource "aws_db_subnet_group" "rds_sub_group" {
-#   name        = "rds-subnet-group"
-#   subnet_ids  = [aws_subnet.private1.id, aws_subnet.private2.id]
-# }
+resource "aws_db_subnet_group" "rds_sub_group" {
+  name       = "rds-subnet-group"
+  subnet_ids = [aws_subnet.private1.id, aws_subnet.private2.id]
+}
