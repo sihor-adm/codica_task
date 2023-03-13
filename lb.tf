@@ -11,5 +11,5 @@ resource "aws_lb" "test" {
   target_type = "alb"
   port        = 80
   protocol    = "TCP"
-  vpc_id      = aws_vpc.main.id
+  vpc_id      = aws_vpc.main-vpc.id
 }

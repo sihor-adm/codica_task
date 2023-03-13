@@ -76,18 +76,18 @@ output "INSTANCE_public_ip" {
   value = aws_instance.webserver.public_ip
 }
 
-output "RDS_db_name" {
-  value = aws_db_instance.wp_db.db_name
-}
+# output "RDS_db_name" {
+#   value = aws_db_instance.wp_db.db_name
+# }
 
-output "RDS_engine" {
-  value = aws_db_instance.wp_db.engine
-}
+# output "RDS_engine" {
+#   value = aws_db_instance.wp_db.engine
+# }
 
-output "RDS_engine_version" {
-  value = aws_db_instance.wp_db.engine_version
-}
+# output "RDS_engine_version" {
+#   value = aws_db_instance.wp_db.engine_version
+# }
 
-output "RDS_instance_class" {
-  value = aws_db_instance.wp_db.instance_class
-}
+# output "RDS_instance_class" {
+#   value = aws_db_instance.wp_db.instance_class
+# }

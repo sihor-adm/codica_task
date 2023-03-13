@@ -1,4 +1,4 @@
-resource "aws_vpc" "main" {
+resource "aws_vpc" "main-vpc" {
   cidr_block = "10.0.0.0/16"
   tags = {
     Name = "main"
@@ -6,7 +6,7 @@ resource "aws_vpc" "main" {
 }
 
 resource "aws_subnet" "private1" {
-  vpc_id            = aws_vpc.main.id
+  vpc_id            = aws_vpc.main-vpc.id
   cidr_block        = "10.0.1.0/24"
   availability_zone = "eu-central-1a"
   depends_on = [
@@ -19,7 +19,7 @@ resource "aws_subnet" "private1" {
 }
 
 resource "aws_subnet" "private2" {
-  vpc_id            = aws_vpc.main.id
+  vpc_id            = aws_vpc.main-vpc.id
   cidr_block        = "10.0.2.0/24"
   availability_zone = "eu-central-1b"
   depends_on = [
@@ -32,7 +32,7 @@ resource "aws_subnet" "private2" {
 }
 
 resource "aws_subnet" "public1" {
-  vpc_id                  = aws_vpc.main.id
+  vpc_id                  = aws_vpc.main-vpc.id
   map_public_ip_on_launch = true
   cidr_block              = "10.0.3.0/24"
   availability_zone       = "eu-central-1a"
@@ -46,7 +46,7 @@ resource "aws_subnet" "public1" {
 }
 
 resource "aws_subnet" "public2" {
-  vpc_id                  = aws_vpc.main.id
+  vpc_id                  = aws_vpc.main-vpc.id
   map_public_ip_on_launch = true
   cidr_block              = "10.0.4.0/24"
   availability_zone       = "eu-central-1b"
@@ -60,7 +60,7 @@ resource "aws_subnet" "public2" {
 }
 
 resource "aws_internet_gateway" "main-igw" {
-  vpc_id = aws_vpc.main.id
+  vpc_id = aws_vpc.main-vpc.id
   depends_on = [
     aws_vpc.main,
     aws_subnet.public1,
@@ -98,7 +98,7 @@ resource "aws_nat_gateway" "public2-nat-gw" {
   depends_on = [aws_internet_gateway.main-igw]
 }
 
-resource "aws_db_subnet_group" "rds_sub_group" {
-  name        = "rds-subnet-group"
-  subnet_ids  = [aws_subnet.private1.id, aws_subnet.private2.id]
-}
+# resource "aws_db_subnet_group" "rds_sub_group" {
+#   name        = "rds-subnet-group"
+#   subnet_ids  = [aws_subnet.private1.id, aws_subnet.private2.id]
+# }

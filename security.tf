@@ -1,10 +1,10 @@
 resource "aws_security_group" "main-sg" {
   name        = "main-sg"
   description = "Allow http inbound traffic"
-  vpc_id      = aws_vpc.main.id
+  vpc_id      = aws_vpc.main-vpc.id
 
   ingress {
-    description = "TLS from VPC"
+    description = "HTTP from VPC"
     from_port   = 80
     to_port     = 80
     protocol    = "tcp"
