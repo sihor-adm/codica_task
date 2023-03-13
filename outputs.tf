@@ -1,5 +1,5 @@
 output "VPC_ip_range" {
-  value       = aws_vpc.main.cidr_block
+  value       = aws_vpc.main-vpc.cidr_block
   description = "IP range of VPC"
 }
 

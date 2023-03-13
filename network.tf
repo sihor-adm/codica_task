@@ -10,7 +10,7 @@ resource "aws_subnet" "private1" {
   cidr_block        = "10.0.1.0/24"
   availability_zone = "eu-central-1a"
   depends_on = [
-    aws_vpc.main
+    aws_vpc.main-vpc
   ]
 
   tags = {
@@ -23,7 +23,7 @@ resource "aws_subnet" "private2" {
   cidr_block        = "10.0.2.0/24"
   availability_zone = "eu-central-1b"
   depends_on = [
-    aws_vpc.main
+    aws_vpc.main-vpc
   ]
 
   tags = {
@@ -37,7 +37,7 @@ resource "aws_subnet" "public1" {
   cidr_block              = "10.0.3.0/24"
   availability_zone       = "eu-central-1a"
   depends_on = [
-    aws_vpc.main
+    aws_vpc.main-vpc
   ]
 
   tags = {
@@ -51,7 +51,7 @@ resource "aws_subnet" "public2" {
   cidr_block              = "10.0.4.0/24"
   availability_zone       = "eu-central-1b"
   depends_on = [
-    aws_vpc.main
+    aws_vpc.main-vpc
   ]
 
   tags = {
@@ -62,7 +62,7 @@ resource "aws_subnet" "public2" {
 resource "aws_internet_gateway" "main-igw" {
   vpc_id = aws_vpc.main-vpc.id
   depends_on = [
-    aws_vpc.main,
+    aws_vpc.main-vpc,
     aws_subnet.public1,
     aws_subnet.public2
   ]
